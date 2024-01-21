@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -5,12 +7,14 @@ import { Input } from "@/components/ui/input"
 import InputGroup from "@/components/ui/input-groups"
 import Label from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useTheme } from "@/contexts/themeContext"
 import Link from "next/link"
 
 const LoginSignup = () => {
+  const {theme} = useTheme()
   return (
-    <div className=" flex justify-center items-center h-screen w-full ">
-    <Tabs defaultValue="account" className="  flex flex-col justify-center items-center w-full">
+    <div className={` flex justify-center items-center h-screen w-full ${theme === "dark" ? "bg-slate-700" : "bg-slate-50"} `}>
+    <Tabs defaultValue="account" className={` ${theme === "dark" ? "dark" : ""}  flex flex-col justify-center items-center w-full`}>
       <TabsList className="absolute top-24">
         <TabsTrigger value="account" className=" ">Login</TabsTrigger>
         <TabsTrigger value="password">Signup</TabsTrigger>

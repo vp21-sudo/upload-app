@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import TopNav from '@/components/top-nav'
 import Footer from '@/components/footer'
+import { ThemeProvider } from '@/contexts/themeContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,10 +19,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <TopNav/>
-        {children}
-        <Footer/>
+      <body className={`${inter.className} flex flex-col h-screen justify-between items-center`}>
+        <ThemeProvider>
+          <TopNav />
+          {children}
+          <Footer />
+        </ThemeProvider>
+
       </body>
     </html>
   )

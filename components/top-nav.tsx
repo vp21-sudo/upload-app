@@ -14,6 +14,8 @@ import {
 } from './ui/navigation-menu'
 import Link from 'next/link'
 import { Github } from 'lucide-react';
+import { Moon, Sun } from "lucide-react"
+import { useTheme } from '@/contexts/themeContext'
 
 
 interface TopNavProps {
@@ -21,8 +23,9 @@ interface TopNavProps {
 }
 
 const TopNav: FC<TopNavProps> = ({ className }) => {
+    const {theme, toggleTheme} = useTheme()
     return (
-        <nav className=' absolute inset-0 flex justify-between items-center px-10 bg-slate-300 h-20'>
+        <nav className={` flex justify-between items-center px-10 h-20 w-full transition-colors ease-in-out duration-200 bg-background ${theme} `}>
             <Image
                 src="/logo.png"
                 alt="logo"
@@ -32,9 +35,9 @@ const TopNav: FC<TopNavProps> = ({ className }) => {
             />
             <div className=' me-24 w-full flex justify-end items-center'>
                 <NavigationMenu >
-                    <NavigationMenuList className=" w-full">
+                    <NavigationMenuList className={theme === "dark" ? 'dark' : ''} >
                         <NavigationMenuItem className=" w-full" >
-                            <NavigationMenuTrigger>About Upload</NavigationMenuTrigger>
+                            <NavigationMenuTrigger className={theme + " text-foreground"}>About Upload</NavigationMenuTrigger>
                             <NavigationMenuContent className=" w-full ">
                                 <div className=' grid grid-cols-3  w-[550px] h-full'>
                                     <div className=' col-span-2 w-full'>
@@ -47,7 +50,7 @@ const TopNav: FC<TopNavProps> = ({ className }) => {
                             </NavigationMenuContent>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
-                            <NavigationMenuTrigger>Features</NavigationMenuTrigger>
+                            <NavigationMenuTrigger className={theme + " text-foreground"}>Features</NavigationMenuTrigger>
                             <NavigationMenuContent className=" w-full ">
                                 <div className=' grid grid-cols-3  w-[550px] h-full'>
                                     <div className=' col-span-2 w-full'>
@@ -60,14 +63,19 @@ const TopNav: FC<TopNavProps> = ({ className }) => {
                             </NavigationMenuContent>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
-                            <Link href="/docs" legacyBehavior passHref>
-                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            <Link href={"/docs"} className=" flex items-center" legacyBehavior>
+                                <NavigationMenuLink  className={navigationMenuTriggerStyle() + theme + " text-foreground"}>
                                 <Github className=' me-2'/>Documentation
                                 </NavigationMenuLink>
                             </Link>
                         </NavigationMenuItem>
                     </NavigationMenuList>
                 </NavigationMenu>
+            </div>
+            <div className=' flex justify-end items-center'>
+                <button onClick={toggleTheme} className=' p-2 rounded-full border-2 border-slate-500'>
+                    {theme === "dark" ? <Sun color='#eae1e1' className=' w-6 h-6' /> : <Moon className=' w-6 h-6' />}
+                </button>
             </div>
         </nav>
     )
